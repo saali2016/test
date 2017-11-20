@@ -1,51 +1,18 @@
-ovs-vsctl show
-1b30fd4a-cadd-4b7d-8450-124ce283c1c6
-    Manager "ptcp:6640:127.0.0.1"
-        is_connected: true
-    Bridge br-tun
-        Controller "tcp:127.0.0.1:6633"
-            is_connected: true
-        fail_mode: secure
-        Port patch-int
-            Interface patch-int
-                type: patch
-                options: {peer=patch-tun}
-        Port br-tun
-            Interface br-tun
-                type: internal
-    Bridge br-ex
-        Controller "tcp:127.0.0.1:6633"
-            is_connected: true
-        fail_mode: secure
-        Port br-ex
-            Interface br-ex
-                type: internal
-        Port phy-br-ex
-            Interface phy-br-ex
-                type: patch
-                options: {peer=int-br-ex}
-        Port "em2"
-            Interface "em2"
-    Bridge br-int
-        Controller "tcp:127.0.0.1:6633"
-            is_connected: true
-        fail_mode: secure
-        Port patch-tun
-            Interface patch-tun
-                type: patch
-                options: {peer=patch-int}
-        Port br-int
-            Interface br-int
-                type: internal
-        Port int-br-ex
-            Interface int-br-ex
-                type: patch
-                options: {peer=phy-br-ex}
-        Port "qvoab5f1400-84"
-            tag: 3
-            Interface "qvoab5f1400-84"
-        Port "tap0bfd0dad-1e"
-            tag: 3
-            Interface "tap0bfd0dad-1e"
-                type: internal
-    ovs_version: "2.6.1"
+etc/neutron/neutron.conf:# MTU for all virtual network components. For flat and VLAN networks, neutron
+/etc/neutron/plugins/ml2/ml2_conf.ini:#type_drivers = local,flat,vlan,gre,vxlan,geneve
+/etc/neutron/plugins/ml2/ml2_conf.ini:type_drivers = vxlan,flat
+/etc/neutron/plugins/ml2/ml2_conf.ini:[ml2_type_flat]
+/etc/neutron/plugins/ml2/ml2_conf.ini:# List of physical_network names with which flat networks can be created. Use
+/etc/neutron/plugins/ml2/ml2_conf.ini:# default '*' to allow flat networks with arbitrary physical_network names. Use
+/etc/neutron/plugins/ml2/ml2_conf.ini:# an empty list to disable flat networks. (list value)
+/etc/neutron/plugins/ml2/ml2_conf.ini:#flat_networks = *
+/etc/neutron/plugins/ml2/ml2_conf.ini:flat_networks = *
+/etc/neutron/plugins/ml2/openvswitch_agent.ini:# used for flat and VLAN networks. The length of bridge names should be no more
+/etc/neutron/plugin.ini:#type_drivers = local,flat,vlan,gre,vxlan,geneve
+/etc/neutron/plugin.ini:type_drivers = vxlan,flat
+/etc/neutron/plugin.ini:[ml2_type_flat]
+/etc/neutron/plugin.ini:# List of physical_network names with which flat networks can be created. Use
+/etc/neutron/plugin.ini:# default '*' to allow flat networks with arbitrary physical_network names. Use
+/etc/neutron/plugin.ini:# an empty list to disable flat networks. (list value)
+/etc/neutron/plugin.ini:#flat_networks = *
+/etc/neutron/plugin.ini:flat_networks = *
